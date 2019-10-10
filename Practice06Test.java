@@ -18,36 +18,45 @@ public class Practice06Test {
 	
 	
 	public void clearData() {
-		while (!queue.empty()) {
-			queue.dequeue();
-		}
-		while (!stack.empty()) {
-			stack.pop();
+		try {
+			while (!queue.empty()) {
+				queue.dequeue();
+			}
+			while (!stack.empty()) {
+				stack.pop();
+			}
+		} catch (Exception e) {
+			// do nothing
 		}
 	}
 	
 	
 	public boolean isPalindrome(String item) {
-		clearData();
-		for (int i = 0; i < item.length(); i++) {
-			String substring = item.substring(i, i+1).toLowerCase();
-			if (substring.matches("[a-z]+")) {
-				stack.push(item.substring(i, i+1));
-				queue.enqueue(item.substring(i, i+1));
+		try {
+			clearData();
+			for (int i = 0; i < item.length(); i++) {
+				String substring = item.substring(i, i+1).toLowerCase();
+				if (substring.matches("[a-z]+")) {
+					stack.push(item.substring(i, i+1));
+					queue.enqueue(item.substring(i, i+1));
+				}
 			}
-		}
 
-		while (! stack.empty() && ! queue.empty()) {
-			if (! stack.pop().equals(queue.dequeue())) {
-				return false;
+			while (! stack.empty() && ! queue.empty()) {
+				if (! stack.pop().equals(queue.dequeue())) {
+					return false;
+				}
 			}
-		}
-		
-		// At this point, the stack AND the queue should be empty. But check in case...
-		if (!stack.empty() || ! queue.empty())
+			
+			// At this point, the stack AND the queue should be empty. But check in case...
+			if (!stack.empty() || ! queue.empty())
+				return false;
+			
+			return true;
+		} catch (Exception e) {
+			System.out.println("ERROR: Could not successfully detect palindrome.");
 			return false;
-		
-		return true;
+		}
 	}
 	
 	
@@ -131,6 +140,7 @@ public class Practice06Test {
 			}
 		} catch (Exception e) {
 			// Do nothing
+			System.out.println(e.getMessage());
 		} finally {
 			System.out.println("====================");
 			System.out.println("Grade for this assignment: " + grade + "%");
